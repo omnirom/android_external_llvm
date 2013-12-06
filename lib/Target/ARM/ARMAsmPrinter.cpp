@@ -747,6 +747,10 @@ void ARMAsmPrinter::emitAttributes() {
 
   std::string CPUString = Subtarget->getCPUString();
 
+  // FIXME: remove krait check when GNU tools support krait cpu
+  if (CPUString != "generic" && CPUString != "krait")
+    ATS.emitTextAttribute(ARMBuildAttrs::CPU_name, CPUString);
+
   if (CPUString == "cortex-a8" ||
       Subtarget->isCortexA8()) {
     AttrEmitter->EmitTextAttribute(ARMBuildAttrs::CPU_name, "cortex-a8");

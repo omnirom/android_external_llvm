@@ -31,7 +31,7 @@ class TargetOptions;
 class ARMSubtarget : public ARMGenSubtargetInfo {
 protected:
   enum ARMProcFamilyEnum {
-    Others, CortexA5, CortexA8, CortexA9, CortexA15, CortexR5, Swift
+    Others, CortexA5, CortexA8, CortexA9, CortexA15, CortexR5, Swift, Krait
   };
 
   /// ARMProcFamily - ARM processor family: Cortex-A8, Cortex-A9, and others.
@@ -238,8 +238,9 @@ public:
   bool isCortexA15() const { return ARMProcFamily == CortexA15; }
   bool isSwift()    const { return ARMProcFamily == Swift; }
   bool isCortexM3() const { return CPUString == "cortex-m3"; }
-  bool isLikeA9() const { return isCortexA9() || isCortexA15(); }
+  bool isLikeA9() const { return isCortexA9() || isCortexA15() || isKrait(); }
   bool isCortexR5() const { return ARMProcFamily == CortexR5; }
+  bool isKrait() const { return ARMProcFamily == Krait; }
 
   bool hasARMOps() const { return !NoARM; }
 
