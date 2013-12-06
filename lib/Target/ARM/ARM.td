@@ -190,6 +190,18 @@ def ProcR5      : SubtargetFeature<"r5", "ARMProcFamily", "CortexR5",
                                     FeatureAvoidPartialCPSR,
                                     FeatureT2XtPk]>;
 
+// FIXME: krait has currently the same features as A9
+// plus VFP4 and hardware division features.
+def ProcKrait   : SubtargetFeature<"krait", "ARMProcFamily", "Krait",
+                                   "Qualcomm ARM processors",
+                                   [FeatureVMLxForwarding,
+                                    FeatureT2XtPk, FeatureFP16,
+                                    FeatureAvoidPartialCPSR,
+                                    FeatureTrustZone,
+                                    FeatureVFP4,
+                                    FeatureHWDiv,
+                                    FeatureHWDivARM]>;
+
 class ProcNoItin<string Name, list<SubtargetFeature> Features>
  : Processor<Name, NoItineraries, Features>;
 
@@ -299,6 +311,13 @@ def : ProcessorModel<"swift",       SwiftModel,
 
 // V8 Processors
 def : ProcNoItin<"cortex-a53",      [HasV8Ops]>;
+
+// FIXME: krait has currently the same Schedule model as A9
+def : ProcessorModel<"krait",       CortexA9Model,
+                                    [ProcKrait, HasV7Ops,
+                                     FeatureNEON, FeatureDB,
+                                     FeatureDSPThumb2, FeatureHasRAS,
+                                     FeatureAClass]>;
 
 //===----------------------------------------------------------------------===//
 // Register File Description
